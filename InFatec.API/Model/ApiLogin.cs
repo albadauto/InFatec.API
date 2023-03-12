@@ -9,11 +9,22 @@ namespace InFatec.API.Model
         public int Id { get; set; }
 
         [Required]
+        [StringLength(50)]
+        public string RA { get; set; }
+
+        [Required]
         [StringLength(100)]
-        public string Username { get; set; }
+        public string Email { get; set; }
 
         [Required]
         [StringLength(100)] 
-        public string Password { get; set; }    
+        public string Password { get; set; }
+
+        [Required]
+        [StringLength(100)]
+        public string CPF { get; set; }
+
+
+        
     }
 }

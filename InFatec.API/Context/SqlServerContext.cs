@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using InFatec.API.Model;
+using Microsoft.EntityFrameworkCore;
 
 namespace InFatec.API.Context
 {
@@ -6,5 +7,7 @@ namespace InFatec.API.Context
     {
         public SqlServerContext(DbContextOptions<SqlServerContext> options) : base(options) {}
 
+
+        public DbSet<ApiLogin> Login { get; set; }
     }
 }

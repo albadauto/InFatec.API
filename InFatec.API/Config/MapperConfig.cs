@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using InFatec.API.DTO;
+using InFatec.API.Model;
 
 namespace InFatec.API.Config
 {
@@ -8,6 +10,8 @@ namespace InFatec.API.Config
         {
             var mappingConfig = new MapperConfiguration(config =>
             {
+                config.CreateMap<ApiLogin, ApiLoginDTO>();
+                config.CreateMap<ApiLoginDTO, ApiLogin>();
 
             });
             return mappingConfig;

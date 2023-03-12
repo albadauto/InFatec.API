@@ -4,12 +4,12 @@ namespace InFatec.API.DTO
 {
     public class ApiLoginDTO
     {
-        public int Id { get; set; }
+        public string RA { get; set; }
 
-  
-        public string Username { get; set; }
-
+        public string Email { get; set; }
 
         public string Password { get; set; }
+
+        public string CPF { get; set; }
     }
 }
