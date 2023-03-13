@@ -8,5 +8,6 @@ namespace InFatec.API.Repository.Interfaces
         Task<ApiLoginDTO> InsertNewUser(ApiLoginDTO dto);
 
         Task<ApiLoginDTO> FindUserByRA(string RA, string password);
+        Task<bool> DeleteByUserId(int id);
     }
 }

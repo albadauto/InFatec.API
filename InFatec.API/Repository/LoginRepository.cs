@@ -17,6 +17,15 @@ namespace InFatec.API.Repository
             _context = context;
         }
 
+        public async Task<bool> DeleteByUserId(int id)
+        {
+            var result = await _context.Login.FirstOrDefaultAsync(x => x.Id == id);
+            if (result == null) return false;
+            _context.Remove(result);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
         public async Task<ApiLoginDTO> FindUserByRA(string RA, string password)
         {
             var result = await _context.Login.FirstOrDefaultAsync(x => x.RA == RA && x.Password == password);
@@ -30,6 +39,7 @@ namespace InFatec.API.Repository
             await _context.SaveChangesAsync();
             return _mapper.Map<ApiLoginDTO>(login);
         }
+
 
 
     }

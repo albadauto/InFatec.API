@@ -59,5 +59,22 @@ namespace InFatec.API.Controllers
                 throw new Exception(error.Message);
             }
         }
+
+        [HttpDelete("DeleteUser/{Id}")]
+        public async Task<ActionResult> DeleteUser(int Id)
+        {
+            try
+            {
+                var result = await _repository.DeleteByUserId(Id);
+                if (result) return Ok(new { success = true, message = "Deletado com sucesso"});
+                else return BadRequest(new { success = false, message = "Erro ao tentar a exclusão desse usuário"});
+            }
+            catch (Exception error)
+            {
+
+                throw new Exception(error.Message);
+            }
+        }
+
     }
 }
