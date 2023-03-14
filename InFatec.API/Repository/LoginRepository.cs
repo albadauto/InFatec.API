@@ -20,6 +20,7 @@ namespace InFatec.API.Repository
         public async Task<bool> DeleteByUserId(int id)
         {
             var result = await _context.Login.FirstOrDefaultAsync(x => x.Id == id);
+
             if (result == null) return false;
             _context.Remove(result);
             await _context.SaveChangesAsync();
@@ -39,6 +40,8 @@ namespace InFatec.API.Repository
             await _context.SaveChangesAsync();
             return _mapper.Map<ApiLoginDTO>(login);
         }
+
+        
 
 
 

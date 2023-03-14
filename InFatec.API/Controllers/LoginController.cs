@@ -2,6 +2,7 @@
 using InFatec.API.Repository.Interfaces;
 using InFatec.API.Services;
 using InFatec.API.Util;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Cryptography;
@@ -60,6 +61,7 @@ namespace InFatec.API.Controllers
             }
         }
 
+        [Authorize]
         [HttpDelete("DeleteUser/{Id}")]
         public async Task<ActionResult> DeleteUser(int Id)
         {

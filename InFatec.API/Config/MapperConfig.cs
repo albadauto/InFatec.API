@@ -12,6 +12,9 @@ namespace InFatec.API.Config
             {
                 config.CreateMap<ApiLogin, ApiLoginDTO>();
                 config.CreateMap<ApiLoginDTO, ApiLogin>();
+                config.CreateMap<ResetPasswordDTO, ApiLogin>();
+                config.CreateMap<ApiLogin, ResetPasswordDTO>();
+
 
             });
             return mappingConfig;

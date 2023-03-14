@@ -10,6 +10,8 @@ namespace InFatec.API.DTO
 
         public string Password { get; set; }
 
+        public string Name { get; set; }
+
         public string CPF { get; set; }
     }
 }

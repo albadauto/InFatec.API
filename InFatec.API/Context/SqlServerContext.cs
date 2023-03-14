@@ -9,5 +9,6 @@ namespace InFatec.API.Context
 
 
         public DbSet<ApiLogin> Login { get; set; }
+        public DbSet<CodeModel> Code { get; set; }  
     }
 }
