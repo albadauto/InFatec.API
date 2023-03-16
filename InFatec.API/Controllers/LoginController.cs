@@ -26,7 +26,7 @@ namespace InFatec.API.Controllers
             {
                 login.Password = new CryptoUtil(SHA256.Create()).hashPassword(login.Password);
                 await _repository.InsertNewUser(login);
-                return Ok(new { success = true, data = login });
+                return Ok(new { success = true, data = new { name = login.Name, RA = login.RA} });
             }
             catch (Exception error)
             {
@@ -34,6 +34,7 @@ namespace InFatec.API.Controllers
                 throw new Exception(error.Message);
             }
         }
+
 
 
         [HttpPost("LoginUser")]
