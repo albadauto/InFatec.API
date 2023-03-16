@@ -37,7 +37,6 @@ namespace InFatec.API.Controllers
             }
         }
 
-        [Authorize]
         [HttpPost("SendEmail")]
         public async Task<ActionResult> SendEmail([FromBody] EmailDTO dto)
         {

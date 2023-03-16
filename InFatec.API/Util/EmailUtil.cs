@@ -25,7 +25,7 @@ namespace InFatec.API.Util
                     port = _configuration.GetValue<int>("SMTP:Port"),
                 };
 
-                var mail = new MailMessage() { From = new MailAddress ( all.username, all.password ) };
+                var mail = new MailMessage() { From = new MailAddress ( all.username, all.Name ) };
                 mail.Subject = subject;
                 mail.To.Add(email);
                 mail.Body = body;
