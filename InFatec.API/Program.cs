@@ -4,6 +4,8 @@ using InFatec.API.Context;
 using InFatec.API.Repository;
 using InFatec.API.Repository.Interfaces;
 using InFatec.API.Services;
+using InFatec.API.Util;
+using InFatec.API.Util.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -19,6 +21,7 @@ builder.Services.AddControllers();
 builder.Services.AddEntityFrameworkSqlServer().AddDbContext<SqlServerContext>(o => o.UseSqlServer(connection));
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddScoped<ILoginRepository, LoginRepository>();
+builder.Services.AddScoped<IEmailUtil, EmailUtil>();
 builder.Services.AddScoped<IForgotPasswordRepository, ForgotPasswordRepository>();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

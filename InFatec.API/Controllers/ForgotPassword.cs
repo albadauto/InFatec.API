@@ -27,8 +27,8 @@ namespace InFatec.API.Controllers
             try
             {
                 var result = await _repository.ResetPassword(dto);
-                if (result == null) return BadRequest( new { success = false });
-                return Ok(new { success = true, data = dto }); 
+                if (result == null) return BadRequest(new { success = false });
+                return Ok(new { success = true, data = dto });
             }
             catch (Exception err)
             {
@@ -39,11 +39,11 @@ namespace InFatec.API.Controllers
 
         [Authorize]
         [HttpPost("SendEmail")]
-        public async Task<ActionResult> SendEmail([FromBody] string body, [FromBody] string email)
+        public async Task<ActionResult> SendEmail([FromBody] EmailDTO dto)
         {
             try
             {
-                var result = await _email.SendEmail(email, this.Subject, body);
+                var result = await _email.SendEmail(dto.Email, this.Subject, dto.Body);
                 if (result)
                     return Ok(new { success = true, message = "Email enviado com sucesso, verificar caixa de entrada" });
                 else

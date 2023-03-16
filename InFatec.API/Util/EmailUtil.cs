@@ -12,7 +12,7 @@ namespace InFatec.API.Util
             _configuration = configuration;
         }
 
-        public bool SendEmail(string email, string subject, string body)
+        public async Task<bool> SendEmail(string email, string subject, string body)
         {
             try
             {
@@ -36,7 +36,7 @@ namespace InFatec.API.Util
                 {
                     smtp.Credentials = new NetworkCredential(all.username, all.password);
                     smtp.EnableSsl = true;
-                    smtp.Send(mail);
+                    await smtp.SendMailAsync(mail);
                     return true;
                 }
             }
