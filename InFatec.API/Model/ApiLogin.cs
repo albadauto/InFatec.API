@@ -26,6 +26,10 @@ namespace InFatec.API.Model
 
         [Required]
         [StringLength(100)]
+        public string Type { get; set; }
+
+        [Required]
+        [StringLength(100)]
         public string CPF { get; set; }
 
 

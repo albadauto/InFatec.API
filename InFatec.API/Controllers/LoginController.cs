@@ -38,11 +38,11 @@ namespace InFatec.API.Controllers
 
 
         [HttpPost("LoginUser")]
-        public async Task<ActionResult<ApiLoginDTO>> LoginUser([FromBody] ApiLoginDTO login)
+        public async Task<ActionResult<LoginDTO>> LoginUser([FromBody] LoginDTO login)
         {
             try
             {
-                if (login.RA == null || login.Password == null) return BadRequest();
+                if (login.RA == null || login.Password == null) return BadRequest(new { logged = false  }) ;
                 var result = await _repository.FindUserByRA(login.RA, new CryptoUtil(SHA256.Create()).hashPassword(login.Password));
                 if (result != null)
                 {

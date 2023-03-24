@@ -20,17 +20,16 @@ namespace InFatec.API.Repository
         public async Task<bool> DeleteByUserId(int id)
         {
             var result = await _context.Login.FirstOrDefaultAsync(x => x.Id == id);
-
             if (result == null) return false;
             _context.Remove(result);
             await _context.SaveChangesAsync();
             return true;
         }
 
-        public async Task<ApiLoginDTO> FindUserByRA(string RA, string password)
+        public async Task<LoginDTO> FindUserByRA(string RA, string password)
         {
             var result = await _context.Login.FirstOrDefaultAsync(x => x.RA == RA && x.Password == password);
-            return _mapper.Map<ApiLoginDTO>(result);
+            return _mapper.Map<LoginDTO>(result);
         }
 
         public async Task<ApiLoginDTO> InsertNewUser(ApiLoginDTO dto)

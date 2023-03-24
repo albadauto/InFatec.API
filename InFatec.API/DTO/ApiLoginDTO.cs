@@ -13,5 +13,7 @@ namespace InFatec.API.DTO
         public string Name { get; set; }
 
         public string CPF { get; set; }
+
+        public string Type { get; set; }
     }
 }
