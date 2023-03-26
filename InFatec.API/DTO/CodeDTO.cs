@@ -9,6 +9,6 @@ namespace InFatec.API.DTO
 
         public string Code { get; set; }
 
-        public ApiLogin ApiLogin { get; set; }
+        public Login ApiLogin { get; set; }
     }
 }

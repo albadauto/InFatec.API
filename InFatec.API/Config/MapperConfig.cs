@@ -10,12 +10,14 @@ namespace InFatec.API.Config
         {
             var mappingConfig = new MapperConfiguration(config =>
             {
-                config.CreateMap<ApiLogin, ApiLoginDTO>();
-                config.CreateMap<ApiLoginDTO, ApiLogin>();
-                config.CreateMap<ResetPasswordDTO, ApiLogin>();
-                config.CreateMap<ApiLogin, ResetPasswordDTO>();
-                config.CreateMap<ApiLogin, LoginDTO>();
+                config.CreateMap<Login, ApiLoginDTO>();
+                config.CreateMap<ApiLoginDTO, Login>();
+                config.CreateMap<ResetPasswordDTO, Login>();
+                config.CreateMap<Login, ResetPasswordDTO>();
+                config.CreateMap<Login, LoginDTO>();
                 config.CreateMap<LoginDTO, ApiLoginDTO>();
+                config.CreateMap<EventsDTO, Events>();
+                config.CreateMap<Events, EventsDTO>();
 
 
             });

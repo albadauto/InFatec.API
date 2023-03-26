@@ -3,7 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace InFatec.API.Model
 {
-    public class ApiLogin
+    public class Login
     {
         [Key]
         public int Id { get; set; }

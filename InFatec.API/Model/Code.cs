@@ -2,15 +2,15 @@
 
 namespace InFatec.API.Model
 {
-    public class CodeModel
+    public class Code
     {
         [Key]
         public int Id { get; set; }
 
         [Required]
         [StringLength(50)]  
-        public string Code { get; set; }
+        public string CodeString { get; set; }
 
-        public ApiLogin ApiLogin { get; set; }
+        public Login ApiLogin { get; set; }
     }
 }

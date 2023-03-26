@@ -34,7 +34,7 @@ namespace InFatec.API.Repository
 
         public async Task<ApiLoginDTO> InsertNewUser(ApiLoginDTO dto)
         {
-            ApiLogin login = _mapper.Map<ApiLogin>(dto);
+            Login login = _mapper.Map<Login>(dto);
             await _context.Login.AddAsync(login);
             await _context.SaveChangesAsync();
             return _mapper.Map<ApiLoginDTO>(login);

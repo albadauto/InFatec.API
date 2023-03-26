@@ -35,7 +35,7 @@ namespace InFatec.API.Repository
 
         public async Task<CodeDTO> InsertNewCode(CodeDTO code)
         {
-            var model = _mapper.Map<CodeModel>(code);
+            var model = _mapper.Map<Code>(code);
             await _context.Code.AddAsync(model);
             return _mapper.Map<CodeDTO>(model);
         }
