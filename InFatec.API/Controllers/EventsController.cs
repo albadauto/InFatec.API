@@ -17,13 +17,26 @@ namespace InFatec.API.Controllers
             _repository = repository;
         }
 
-        [Authorize]
         [HttpPost("InsertNewEvent")]
-        public async Task<ActionResult<EventsDTO>> InsertNewEvent([FromBody] EventsDTO values)
+        public async Task<ActionResult<EventsDTO>> InsertNewEvent([FromForm] EventsDTO dto)
         {
             try
             {
-                var result = await _repository.InsertEvent(values);
+                if (dto.ImageFile == null) return BadRequest();
+
+                var fileName = Guid.NewGuid().ToString() + dto.ImageFile.FileName;
+                var filePath = Path.Combine("Storage", fileName);
+
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    await dto.ImageFile.CopyToAsync(fileStream);
+                }
+                var result = await _repository.InsertEvent(new EventsDTO()
+                {
+                    Description = dto.Description,
+                    Image_Uri = filePath,
+                    Title = dto.Title,
+                });
                 return Ok(new { success = true, data = result });
             }
             catch (Exception err)
@@ -99,5 +112,7 @@ namespace InFatec.API.Controllers
                 throw;
             }
         }
+
+      
     }
 }
