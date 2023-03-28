@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace InFatec.API.Model
 {
@@ -9,10 +10,13 @@ namespace InFatec.API.Model
 
         [Required]
         [StringLength(255)]
-        public string Message { get; set; }
+        public string? Message { get; set; }
 
         [Required]
         public string ImgUri { get; set; }
+
+        [NotMapped]
+        public IFormFile ImageFile { get; set; }
 
     }
 }

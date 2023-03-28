@@ -17,6 +17,7 @@ namespace InFatec.API.Controllers
             _repository = repository;
         }
 
+        [Authorize]
         [HttpPost("InsertNewEvent")]
         public async Task<ActionResult<EventsDTO>> InsertNewEvent([FromForm] EventsDTO dto)
         {
