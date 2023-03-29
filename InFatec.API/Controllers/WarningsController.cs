@@ -31,8 +31,9 @@ namespace InFatec.API.Controllers
                 }
                 var result = await _repository.InsertNewWarning(new WarningDTO
                 {
-                    ImgUri = path + fileName,
+                    ImgUri = "ShowImage/" + path + fileName,
                     Message = dto.Message,
+                    ImageName = fileName
                 });
                 return Ok(new { success = true, data = result});
             }
@@ -44,13 +45,29 @@ namespace InFatec.API.Controllers
         }
 
         //Função para download de imagem via API
-        [HttpGet]
-        public async Task<FileResult> ForTest()
+        [HttpGet("ShowImage/{filename}")]
+        public async Task<FileResult> ShowImage(string filename)
         {
-            var filePath = $"Storage/495419.jpg"; 
+            var filePath = $"Storage/{filename}"; 
 
             var bytes = await System.IO.File.ReadAllBytesAsync(filePath);
-            return File(bytes, "image/jpg", Path.GetFileName(filePath));
+            return File(bytes, "image/*", Path.GetFileName(filePath));
+        }
+
+        [HttpGet("GetAllWarnings")]
+        public async Task<ActionResult<IEnumerable<WarningDTO>>> GetAllWarnings()
+        {
+            try
+            {
+                var result = await _repository.GetAllWarnings();
+                if (result == null) return NotFound(new { success = false, message = "Nenhum registro encontrado" });
+                return Ok(new { success = true, data = result});
+            }
+            catch (Exception err)
+            {
+
+                throw new Exception(err.Message);
+            }
         }
     }
 }

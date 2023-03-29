@@ -15,6 +15,10 @@ namespace InFatec.API.Model
         [Required]
         public string ImgUri { get; set; }
 
+        [Required]
+        [StringLength(255)]
+        public string FileName { get; set; }
+
         [NotMapped]
         public IFormFile ImageFile { get; set; }
 

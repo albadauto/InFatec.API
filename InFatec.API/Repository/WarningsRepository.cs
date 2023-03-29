@@ -3,6 +3,7 @@ using InFatec.API.Context;
 using InFatec.API.DTO;
 using InFatec.API.Model;
 using InFatec.API.Repository.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace InFatec.API.Repository
 {
@@ -22,6 +23,12 @@ namespace InFatec.API.Repository
             await _context.Warnings.AddAsync(mapped);
             await _context.SaveChangesAsync();
             return _mapper.Map<WarningDTO>(mapped);
+        }
+
+        public async Task<IEnumerable<WarningDTO>> GetAllWarnings()
+        {
+            var result = await _context.Warnings.ToListAsync();
+            return _mapper.Map<IEnumerable<WarningDTO>>(result);
         }
     }
 }

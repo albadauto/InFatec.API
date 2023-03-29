@@ -5,6 +5,7 @@ namespace InFatec.API.DTO
 {
     public class WarningDTO
     {
+        public string? ImageName { get; set; }
         public string Message { get; set; }
 
         public string? ImgUri { get; set; }
