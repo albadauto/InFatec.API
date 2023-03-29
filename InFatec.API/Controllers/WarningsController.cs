@@ -3,6 +3,7 @@ using InFatec.API.Repository.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.FileProviders;
 
 namespace InFatec.API.Controllers
 {
@@ -16,6 +17,7 @@ namespace InFatec.API.Controllers
             _repository = repository;
         }
 
+        [Authorize]
         [HttpPost("CreateNewWarning")]
         public async Task<ActionResult<WarningDTO>> CreateNewWarning([FromForm] WarningDTO dto)
         {
@@ -39,6 +41,16 @@ namespace InFatec.API.Controllers
 
                 throw new Exception(e.Message);
             }
+        }
+
+        //Função para download de imagem via API
+        [HttpGet]
+        public async Task<FileResult> ForTest()
+        {
+            var filePath = $"Storage/495419.jpg"; 
+
+            var bytes = await System.IO.File.ReadAllBytesAsync(filePath);
+            return File(bytes, "image/jpg", Path.GetFileName(filePath));
         }
     }
 }
