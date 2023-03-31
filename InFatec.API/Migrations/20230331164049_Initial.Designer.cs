@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InFatec.API.Migrations
 {
     [DbContext(typeof(SqlServerContext))]
-    [Migration("20230326195818_EventsTimeLine")]
-    partial class EventsTimeLine
+    [Migration("20230331164049_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -61,6 +61,9 @@ namespace InFatec.API.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
+                    b.Property<string>("Image_Uri")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -104,10 +107,9 @@ namespace InFatec.API.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<string>("Type")
-                        .IsRequired()
+                    b.Property<int>("Type")
                         .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -154,9 +156,17 @@ namespace InFatec.API.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("ImageName")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
                     b.Property<string>("ImgUri")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("LoginId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Message")
                         .IsRequired()
@@ -164,6 +174,8 @@ namespace InFatec.API.Migrations
                         .HasColumnType("nvarchar(255)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("LoginId");
 
                     b.ToTable("Warnings");
                 });
@@ -180,6 +192,17 @@ namespace InFatec.API.Migrations
                 });
 
             modelBuilder.Entity("InFatec.API.Model.TimeLine", b =>
+                {
+                    b.HasOne("InFatec.API.Model.Login", "Login")
+                        .WithMany()
+                        .HasForeignKey("LoginId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Login");
+                });
+
+            modelBuilder.Entity("InFatec.API.Model.Warnings", b =>
                 {
                     b.HasOne("InFatec.API.Model.Login", "Login")
                         .WithMany()

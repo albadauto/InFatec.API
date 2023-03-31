@@ -97,6 +97,14 @@ namespace InFatec.API.Controllers
             }
         }
 
+        [HttpGet("ViewImageEvent/{fileName}")]
+        public async Task<FileResult> ViewImageEvent(string fileName)
+        {
+            var filePath = $"Storage/{fileName}";
+            var bytes = await System.IO.File.ReadAllBytesAsync(filePath);
+            return File(bytes, "image/*", Path.GetFileName(filePath));
+        }
+
         [Authorize]
         [HttpPut("UpdateEvent")]
         public async Task<ActionResult<EventsDTO>> UpdateEvent([FromBody] EventsDTO dto)

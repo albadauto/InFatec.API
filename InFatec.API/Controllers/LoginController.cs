@@ -48,7 +48,6 @@ namespace InFatec.API.Controllers
                 {
                     var token = TokenService.GenerateToken();
                     return Ok(new { logged = true, bearer = token });
-
                 }
                 else
                 {

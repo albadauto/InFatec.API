@@ -21,39 +21,38 @@ namespace InFatec.API.Controllers
         [HttpPost("CreateNewWarning")]
         public async Task<ActionResult<WarningDTO>> CreateNewWarning([FromForm] WarningDTO dto)
         {
-            try
-            {
                 var fileName = Guid.NewGuid().ToString() + new DateTime().Hour + "_" + dto.ImageFile.FileName;
-                var path = Path.Combine("Storage", fileName);
-                using(var stream = new FileStream(path, FileMode.Create))
+                var path = Path.Combine("Storage/", fileName);
+                using (var stream = new FileStream(path, FileMode.Create))
                 {
                     await dto.ImageFile.CopyToAsync(stream);
                 }
                 var result = await _repository.InsertNewWarning(new WarningDTO
                 {
-                    ImgUri = "ShowImage/" + path + fileName,
+                    LoginId = dto.LoginId,
+                    ImgUri = path,
                     Message = dto.Message,
                     ImageName = fileName
                 });
-                return Ok(new { success = true, data = result});
-            }
-            catch (Exception e)
-            {
-
-                throw new Exception(e.Message);
-            }
+                return Ok(new { success = true, data = result });
+            
         }
 
         //Função para download de imagem via API
         [HttpGet("ShowImage/{filename}")]
         public async Task<FileResult> ShowImage(string filename)
         {
-            var filePath = $"Storage/{filename}"; 
+
+            var filePath = $"Storage/{filename}";
 
             var bytes = await System.IO.File.ReadAllBytesAsync(filePath);
+
             return File(bytes, "image/*", Path.GetFileName(filePath));
+
+
         }
 
+        [Authorize]
         [HttpGet("GetAllWarnings")]
         public async Task<ActionResult<IEnumerable<WarningDTO>>> GetAllWarnings()
         {
@@ -61,7 +60,7 @@ namespace InFatec.API.Controllers
             {
                 var result = await _repository.GetAllWarnings();
                 if (result == null) return NotFound(new { success = false, message = "Nenhum registro encontrado" });
-                return Ok(new { success = true, data = result});
+                return Ok(new { success = true, data = result });
             }
             catch (Exception err)
             {
@@ -69,5 +68,7 @@ namespace InFatec.API.Controllers
                 throw new Exception(err.Message);
             }
         }
+
+
     }
 }

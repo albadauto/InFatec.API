@@ -26,7 +26,12 @@ namespace InFatec.API.Model
 
         [Required]
         [StringLength(100)]
-        public string Type { get; set; }
+        public int Type { get; set; }
+
+        /**
+         * 1- Professor
+         * 2- Administrador
+         */
 
         [Required]
         [StringLength(100)]

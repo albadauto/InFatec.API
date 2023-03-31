@@ -12,5 +12,6 @@ namespace InFatec.API.Model
         public string CodeString { get; set; }
 
         public Login ApiLogin { get; set; }
+
     }
 }

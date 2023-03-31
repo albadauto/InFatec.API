@@ -17,7 +17,11 @@ namespace InFatec.API.Model
 
         [Required]
         [StringLength(255)]
-        public string FileName { get; set; }
+        public string ImageName { get; set; }
+
+        public Login Login { get; set; }
+
+        public int LoginId { get; set; }
 
         [NotMapped]
         public IFormFile ImageFile { get; set; }
