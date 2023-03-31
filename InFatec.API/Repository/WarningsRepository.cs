@@ -25,10 +25,29 @@ namespace InFatec.API.Repository
             return _mapper.Map<WarningDTO>(mapped);
         }
 
-        public async Task<IEnumerable<WarningDTO>> GetAllWarnings()
+        public async Task<List<WarningDTO>> GetAllWarnings()
         {
-            var result = await _context.Warnings.ToListAsync();
-            return _mapper.Map<IEnumerable<WarningDTO>>(result);
+            var Warning = new List<Warnings>();
+            var result = await (from w in _context.Warnings
+                          join u in _context.Login
+                          on w.LoginId equals u.Id
+                          select new { w.Message, u.Name, u.Email, u.RA, w.ImageName, w.ImgUri }).ToListAsync();
+            foreach (var value in result)
+            {
+                Warning.Add(new Warnings
+                {
+                    Message = value.Message,
+                    ImgUri = value.ImgUri,
+                    ImageName = value.ImageName,
+                    Login = new Login
+                    {
+                        Name = value.Name,
+                        Email = value.Email,
+                        RA = value.RA
+                    }
+                });
+            }
+            return _mapper.Map<List<WarningDTO>>(Warning);
         }
 
         public Task<bool> DeleteWarning(int Id)
