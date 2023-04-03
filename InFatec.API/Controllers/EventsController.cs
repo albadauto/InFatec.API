@@ -105,6 +105,8 @@ namespace InFatec.API.Controllers
             return File(bytes, "image/*", Path.GetFileName(filePath));
         }
 
+
+
         [Authorize]
         [HttpPut("UpdateEvent")]
         public async Task<ActionResult<EventsDTO>> UpdateEvent([FromBody] EventsDTO dto)
@@ -115,10 +117,13 @@ namespace InFatec.API.Controllers
                 if (result != null) return Ok(new { success = true, data = result, message = "Registro atualizado com sucesso" });
                 else return NotFound(new { success = false, message = "Nenhum registro encontrado" });
             }
-            catch (Exception)
+            catch (InvalidOperationException ex)
             {
-
-                throw;
+                return BadRequest(new { success = false, message = "Erro: solicitação inválida", exception = ex.Message, stacktrace = ex.StackTrace });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { sucess = false, message = "Erro interno do servidor", exception = ex.Message, stacktrace = ex.StackTrace });
             }
         }
 

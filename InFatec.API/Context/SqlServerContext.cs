@@ -11,5 +11,6 @@ namespace InFatec.API.Context
         public DbSet<Warnings> Warnings { get; set; }
         public DbSet<TimeLine> TimeLine { get; set; }
         public DbSet<Events> Events { get; set; }
+        public DbSet<Courses> Courses { get; set; }
     }
 }

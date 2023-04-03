@@ -10,7 +10,7 @@ namespace InFatec.API.Model
 
         [Required]
         [StringLength(255)]
-        public string? Message { get; set; }
+        public string Message { get; set; }
 
         [Required]
         public string ImgUri { get; set; }

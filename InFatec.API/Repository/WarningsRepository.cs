@@ -50,9 +50,19 @@ namespace InFatec.API.Repository
             return _mapper.Map<List<WarningDTO>>(Warning);
         }
 
-        public Task<bool> DeleteWarning(int Id)
+        public async Task<bool> DeleteWarning(int Id)
         {
-            throw new NotImplementedException();
+            var result = await _context.Warnings.FirstOrDefaultAsync(x => x.Id == Id);
+            if(result != null)
+            {
+                _context.Remove(result);
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

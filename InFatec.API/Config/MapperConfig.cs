@@ -20,6 +20,9 @@ namespace InFatec.API.Config
                 config.CreateMap<Events, EventsDTO>();
                 config.CreateMap<WarningDTO, Warnings>();
                 config.CreateMap<Warnings, WarningDTO>();
+                config.CreateMap<Courses, CoursesDTO>();
+                config.CreateMap<CoursesDTO, Courses>();
+
 
 
             });

@@ -23,6 +23,7 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddScoped<ILoginRepository, LoginRepository>();
 builder.Services.AddScoped<IEmailUtil, EmailUtil>();
 builder.Services.AddScoped<IForgotPasswordRepository, ForgotPasswordRepository>();
+builder.Services.AddScoped<ICoursesRepository, CoursesRepository>();
 builder.Services.AddScoped<IWarningsRepository, WarningsRepository>();
 builder.Services.AddScoped<IEventsRepository, EventsRepository>();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

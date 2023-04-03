@@ -17,10 +17,11 @@ namespace InFatec.API.Controllers
             _repository = repository;
         }
 
-        [Authorize]
         [HttpPost("CreateNewWarning")]
         public async Task<ActionResult<WarningDTO>> CreateNewWarning([FromForm] WarningDTO dto)
         {
+            try
+            {
                 var fileName = Guid.NewGuid().ToString() + new DateTime().Hour + "_" + dto.ImageFile.FileName;
                 var path = Path.Combine("Storage/", fileName);
                 using (var stream = new FileStream(path, FileMode.Create))
@@ -35,7 +36,19 @@ namespace InFatec.API.Controllers
                     ImageName = fileName
                 });
                 return Ok(new { success = true, data = result });
-            
+            }
+            catch (InvalidOperationException ex)
+            {
+
+                return BadRequest(new { success = false, message = "Erro: solicitação inválida", exception = ex.Message, stacktrace = ex.StackTrace });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { sucess = false, message = "Erro interno do servidor", exception = ex.Message, stacktrace = ex.StackTrace });
+            }
+
+
+
         }
 
         //Função para download de imagem via API
@@ -62,10 +75,34 @@ namespace InFatec.API.Controllers
                 if (result == null) return NotFound(new { success = false, message = "Nenhum registro encontrado" });
                 return Ok(new { success = true, data = result });
             }
-            catch (Exception err)
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(new { success = false, message = "Erro: solicitação inválida", exception = ex.Message, stacktrace = ex.StackTrace });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { sucess = false, message = "Erro interno do servidor", exception = ex.Message, stacktrace = ex.StackTrace });
+            }
+        }
+
+        [Authorize]
+        [HttpDelete("DeleteWarning/{Id}")]
+        public async Task<ActionResult> DeleteWarning(int Id)
+        {
+            try
+            {
+                var result = await _repository.DeleteWarning(Id);
+                if (result) return Ok(new { success = true, message = "Aviso deletado com sucesso" });
+                else return NotFound(new { success = false, message = "Erro: Aviso, não encontrado" });
+            }
+            catch (InvalidOperationException ex)
             {
 
-                throw new Exception(err.Message);
+                return BadRequest(new { success = false, message = "Erro: solicitação inválida", exception = ex.Message, stacktrace = ex.StackTrace });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { sucess = false, message = "Erro interno do servidor", exception = ex.Message, stacktrace = ex.StackTrace });
             }
         }
 
