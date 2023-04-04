@@ -17,10 +17,9 @@ namespace InFatec.API.Controllers
             _repository = repository;
         }
 
-        [HttpPost("InsertNewCourseByXLS")]
-        public async Task<ActionResult<CoursesDTO>> InsertNewCourseByXLS()
+        private List<CoursesDTO> MapXLSXInList(string filepath)
         {
-            FileInfo existingFile = new FileInfo("Storage/teste.xlsx");
+            FileInfo existingFile = new FileInfo(filepath);
             var courses = new List<CoursesDTO>();
 
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
@@ -30,7 +29,6 @@ namespace InFatec.API.Controllers
                 ExcelWorksheet worksheet = package.Workbook.Worksheets[0];
                 int colCount = worksheet.Dimension.End.Column;
                 int rowCount = worksheet.Dimension.End.Row;
-                Console.WriteLine(rowCount);
                 for (int row = 1; row <= rowCount; row++)
                 {
                     var course = new CoursesDTO();
@@ -43,17 +41,49 @@ namespace InFatec.API.Controllers
                 }
             }
 
-            foreach(var course in courses)
+            foreach (var course in courses)
             {
                 Console.WriteLine(course.Name);
                 Console.WriteLine(course.Period);
                 Console.WriteLine(course.Coordinator);
             }
+            return courses;
+        }
 
 
-            return Ok();
 
+        [HttpPost("InsertNewCourseByXLSX")]
+        public async Task<ActionResult<CoursesDTO>> InsertNewCourseByXLSX([FromForm] CoursesDTO dto)
+        {
+            try
+            {
 
+                var name = dto.Excel.FileName + new DateTime().Hour.ToString();
+                var filepath = Path.Combine("Storage/", name);
+                using (var fileStream = new FileStream(filepath, FileMode.Create))
+                {
+                    await dto.Excel.CopyToAsync(fileStream);
+                }
+                var list = MapXLSXInList(filepath);
+
+                foreach (var value in list)
+                {
+                    await _repository.InsertNewCourse(new CoursesDTO
+                    {
+                        Name = value.Name,
+                        Period = value.Period,
+                        Coordinator = value.Coordinator,
+                        Start = TimeSpan.Parse(value.Start.ToString().Split(".")[1]),
+                        End = TimeSpan.Parse(value.End.ToString().Split(".")[1]),
+                    });
+                }
+                return Ok();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
     }
