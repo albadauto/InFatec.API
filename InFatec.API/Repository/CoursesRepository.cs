@@ -16,7 +16,7 @@ namespace InFatec.API.Repository
             _mapper = mapper;
         }
 
-        public async Task<CoursesDTO> InsertNewCourse(CoursesDTO dto)
+        public async Task<CoursesDTO> InsertNewCourse(List<CoursesDTO> dto)
         {
             var model = _mapper.Map<Courses>(dto);
             await _context.Courses.AddAsync(model);
