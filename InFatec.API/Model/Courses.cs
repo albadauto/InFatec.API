@@ -18,6 +18,7 @@ namespace InFatec.API.Model
 
         [Required]
         public TimeSpan Start { get; set; }
+
         [Required]
         public TimeSpan End { get; set; }
 

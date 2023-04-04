@@ -41,28 +41,21 @@ namespace InFatec.API.Controllers
                 }
             }
 
-            foreach (var course in courses)
-            {
-                Console.WriteLine(course.Name);
-                Console.WriteLine(course.Period);
-                Console.WriteLine(course.Coordinator);
-            }
             return courses;
         }
 
 
 
         [HttpPost("InsertNewCourseByXLSX")]
-        public async Task<ActionResult<CoursesDTO>> InsertNewCourseByXLSX([FromForm] CoursesDTO dto)
+        public async Task<ActionResult<CoursesDTO>> InsertNewCourseByXLSX([FromForm] InsertFileDTO upload)
         {
             try
             {
-
-                var name = dto.Excel.FileName + new DateTime().Hour.ToString();
+                var name = upload.file.FileName + new DateTime().Hour.ToString();
                 var filepath = Path.Combine("Storage/", name);
                 using (var fileStream = new FileStream(filepath, FileMode.Create))
                 {
-                    await dto.Excel.CopyToAsync(fileStream);
+                    await upload.file.CopyToAsync(fileStream);
                 }
                 var list = MapXLSXInList(filepath);
 
