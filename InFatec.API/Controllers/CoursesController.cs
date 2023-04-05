@@ -1,6 +1,7 @@
 ﻿using Azure;
 using InFatec.API.DTO;
 using InFatec.API.Repository.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OfficeOpenXml;
@@ -44,8 +45,7 @@ namespace InFatec.API.Controllers
             return courses;
         }
 
-
-
+        [Authorize]
         [HttpPost("InsertNewCourseByXLSX")]
         public async Task<ActionResult<CoursesDTO>> InsertNewCourseByXLSX([FromForm] InsertFileDTO upload)
         {
@@ -70,14 +70,48 @@ namespace InFatec.API.Controllers
                         End = TimeSpan.Parse(value.End.ToString().Split(".")[1]),
                     });
                 }
-                return Ok();
+                return Ok(new { success = true, message = "Cursos inseridos com sucesso"});
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
-                throw;
+                return StatusCode(500, new { success = false, message = ex.Message, trace = ex.StackTrace });
             }
         }
+
+        [Authorize]
+        [HttpGet("GetAllCourses")]
+        public async Task<ActionResult<List<CoursesDTO>>> GetAllCourses()
+        {
+            try
+            {
+                var result = await _repository.ListAllCourses();
+                if (result.Count > 0) return Ok(new { success = true, data = result });
+                else return NotFound(new { success = false, message = "Não há dados" });
+            }
+            catch (Exception ex)
+            {
+
+                return StatusCode(500, new { success = false, message = ex.Message, trace = ex.StackTrace });
+            }
+        }
+
+        [Authorize]
+        [HttpDelete("DeleteAllCourses")]
+        public async Task<ActionResult> DeleteAllCourses()
+        {
+            try
+            {
+                await _repository.TruncateAllCourses();
+                return Ok(new { success = true, message = "Todos os cursos deletados com sucesso"});
+            }
+            catch (Exception ex)
+            {
+
+                return StatusCode(500, new { success = false, message = ex.Message, trace = ex.StackTrace });
+            }
+        }
+
 
     }
 
