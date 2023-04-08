@@ -39,7 +39,6 @@ namespace InFatec.API.Controllers
             }
             catch (InvalidOperationException ex)
             {
-
                 return BadRequest(new { success = false, message = "Erro: solicitação inválida", exception = ex.Message, stacktrace = ex.StackTrace });
             }
             catch (Exception ex)

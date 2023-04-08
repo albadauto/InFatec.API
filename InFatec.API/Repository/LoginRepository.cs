@@ -40,9 +40,6 @@ namespace InFatec.API.Repository
             return _mapper.Map<ApiLoginDTO>(login);
         }
 
-        
-
-
-
+       
     }
 }

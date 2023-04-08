@@ -21,23 +21,25 @@ namespace InFatec.API.Model
         public string Email { get; set; }
 
         [Required]
-        [StringLength(100)] 
+        [StringLength(100)]
         public string Password { get; set; }
+
+        /**
+            * 1- Professor
+            * 2- Administrador
+         */
 
         [Required]
         [StringLength(100)]
         public int Type { get; set; }
 
-        /**
-         * 1- Professor
-         * 2- Administrador
-         */
+
 
         [Required]
         [StringLength(100)]
         public string CPF { get; set; }
 
 
-        
+
     }
 }
