@@ -1,15 +1,20 @@
-﻿namespace InFatec.API.DTO
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace InFatec.API.DTO
 {
     public class TimeLineDTO
     {
-        public int Id { get; set; }
 
         public string ClassRoom { get; set; }
 
         public int Floor { get; set; }
 
-        public DateTime Start { get; set; }
+        public int LoginId { get; set; }
 
-        public DateTime End { get; set; }
+        public string Start { get; set; }
+
+        public string End { get; set; }
+
+      
     }
 }

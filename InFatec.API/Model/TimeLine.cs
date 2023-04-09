@@ -14,10 +14,14 @@ namespace InFatec.API.Model
         [Required]
         public int Floor { get; set; }
 
-        [Required]
-        public DateTime Start { get; set; }
+        public Login Login { get; set; }
+        
+        public int LoginId { get; set; }
 
         [Required]
-        public DateTime End { get; set; }
+        public TimeSpan Start { get; set; }
+
+        [Required]
+        public TimeSpan End { get; set; }
     }
 }

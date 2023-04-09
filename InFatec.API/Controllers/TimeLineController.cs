@@ -23,13 +23,12 @@ namespace InFatec.API.Controllers
             try
             {
                 await _repository.InsertTimeLine(dto);
-                return Ok();
+                return Ok(new { message = "Inserido com sucesso", success = true});
 
 
             }
             catch (Exception ex)
             {
-
                 return StatusCode(500, new { success = false, message = ex.Message, trace = ex.StackTrace });
             }
         }
