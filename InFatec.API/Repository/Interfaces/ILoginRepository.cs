@@ -9,5 +9,7 @@ namespace InFatec.API.Repository.Interfaces
 
         Task<LoginDTO> FindUserByRA(string RA, string password);
         Task<bool> DeleteByUserId(int id);
+
+        Task<ApiLoginDTO> UpdateUser(ApiLoginDTO dto);
     }
 }

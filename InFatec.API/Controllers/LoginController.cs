@@ -82,5 +82,21 @@ namespace InFatec.API.Controllers
             }
         }
 
+        [HttpPut("UpdateOneUser")]
+        public async Task<ActionResult<ApiLoginDTO>> UpdateOneUser([FromBody] ApiLoginDTO dto)
+        {
+            try
+            {
+                var result = await _repository.UpdateUser(dto);
+                if (result != null) return Ok(new { success = true, message = "Usuário atualizado com sucesso" });
+                else return BadRequest(new { success = false, message = "Usuário não encontrado" });
+            }
+            catch (Exception error)
+            {
+
+                throw new Exception(error.Message);
+            }
+        }
+
     }
 }

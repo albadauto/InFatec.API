@@ -3,6 +3,7 @@ using InFatec.API.Context;
 using InFatec.API.DTO;
 using InFatec.API.Model;
 using InFatec.API.Repository.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace InFatec.API.Repository
@@ -40,6 +41,16 @@ namespace InFatec.API.Repository
             return _mapper.Map<ApiLoginDTO>(login);
         }
 
-       
+        public async Task<ApiLoginDTO> UpdateUser(ApiLoginDTO dto)
+        {
+
+            var mapped = _mapper.Map<Login>(dto);
+            _context.Login.Update(mapped);
+            await _context.SaveChangesAsync();
+            return _mapper.Map<ApiLoginDTO>(mapped);
+
+        }
+
+        
     }
 }

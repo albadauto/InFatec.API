@@ -18,6 +18,15 @@ namespace InFatec.API.Repository
             _context = context;
         }
 
+        public async Task<bool> DeleteTimeLine(int Id)
+        {
+            var result = await _context.TimeLine.FirstOrDefaultAsync(x => x.Id == Id);
+            if (result == null) return false;
+            _context.TimeLine.Remove(result);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
         public async Task<List<TimeLineDTO>> GetAllTimeLine()
         {
             var result = await _context.TimeLine.ToListAsync();
@@ -30,6 +39,14 @@ namespace InFatec.API.Repository
             await _context.TimeLine.AddAsync(model);
             await _context.SaveChangesAsync();
             return _mapper.Map<TimeLineDTO>(model);
+        }
+
+        public async Task<TimeLineDTO> UpdateTimeLine(TimeLineDTO dto)
+        {
+            var mapped = _mapper.Map<TimeLine>(dto);
+            _context.TimeLine.Update(mapped);
+            await _context.SaveChangesAsync();
+            return _mapper.Map<TimeLineDTO>(mapped);
         }
     }
 }
