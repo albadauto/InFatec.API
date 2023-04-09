@@ -25,6 +25,10 @@ namespace InFatec.API.Controllers
             try
             {
                 login.Password = new CryptoUtil(SHA256.Create()).hashPassword(login.Password);
+                if (login.Email.Split("@")[1] != "fatec.sp.gov.br")
+                {
+                    return StatusCode(406, new { success = false, message = "O email deverá ser com domínio @fatec.sp.gov.br. Favor contatar o administrador" });
+                }
                 await _repository.InsertNewUser(login);
                 return Ok(new { success = true, data = new { name = login.Name, RA = login.RA} });
             }

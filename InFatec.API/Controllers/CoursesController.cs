@@ -45,6 +45,7 @@ namespace InFatec.API.Controllers
             return courses;
         }
 
+        [Authorize]
         [HttpPost("InsertNewCourseByXLSX")]
         public async Task<ActionResult<CoursesDTO>> InsertNewCourseByXLSX([FromForm] InsertFileDTO upload)
         {

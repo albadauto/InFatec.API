@@ -32,5 +32,20 @@ namespace InFatec.API.Controllers
                 return StatusCode(500, new { success = false, message = ex.Message, trace = ex.StackTrace });
             }
         }
+
+        [HttpGet("GetTimeLines")]
+        public async Task<ActionResult<List<TimeLineDTO>>> GetTimeLines()
+        {
+            try
+            {
+                var data = await _repository.GetAllTimeLine();
+                if (data != null) return Ok(new { success = true, result = data });
+                else return NotFound(new { success = false, message = "Não há dados" });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { success = false, message = ex.Message, trace = ex.StackTrace });
+            }
+        }
     }
 }
