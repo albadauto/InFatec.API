@@ -27,11 +27,19 @@ namespace InFatec.API.Repository
             return true;
         }
 
+        public async Task<ApiLoginDTO> FindRA(string RA)
+        {
+            var result = await _context.Login.FirstOrDefaultAsync(x => x.RA == RA);
+            return _mapper.Map<ApiLoginDTO>(result);
+        }
+
         public async Task<LoginDTO> FindUserByRA(string RA, string password)
         {
             var result = await _context.Login.FirstOrDefaultAsync(x => x.RA == RA && x.Password == password);
             return _mapper.Map<LoginDTO>(result);
         }
+
+
 
         public async Task<ApiLoginDTO> InsertNewUser(ApiLoginDTO dto)
         {
@@ -51,6 +59,6 @@ namespace InFatec.API.Repository
 
         }
 
-        
+
     }
 }

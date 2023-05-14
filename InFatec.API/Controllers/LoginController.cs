@@ -14,6 +14,7 @@ namespace InFatec.API.Controllers
     public class LoginController : ControllerBase
     {
         private readonly ILoginRepository _repository;
+        private bool isMaster = false;
         public LoginController(ILoginRepository repository)
         {
             _repository = repository;
@@ -25,12 +26,33 @@ namespace InFatec.API.Controllers
             try
             {
                 login.Password = new CryptoUtil(SHA256.Create()).hashPassword(login.Password);
+                var userFound = await _repository.FindRA(login.RA);
                 if (login.Email.Split("@")[1] != "fatec.sp.gov.br")
                 {
                     return StatusCode(406, new { success = false, message = "O email deverá ser com domínio @fatec.sp.gov.br. Favor contatar o administrador" });
                 }
-                await _repository.InsertNewUser(login);
-                return Ok(new { success = true, data = new { name = login.Name, RA = login.RA} });
+                if (isMaster)
+                {
+                    await _repository.InsertNewUser(login);
+                    return Ok(new { success = true, message = "Usuário inserido com sucesso by: Master" });
+
+                }
+                else
+                {
+                    if (userFound != null)
+                    {
+                        await _repository.InsertNewUser(login);
+                        return Ok(new { success = true, data = new { name = login.Name, RA = login.RA } });
+                    }
+                    else
+                    {
+                        return StatusCode(406, new { success = false, message = "RA não cadastrado no banco de dados" });
+                    }
+                }
+
+
+
+
             }
             catch (Exception error)
             {
@@ -46,7 +68,7 @@ namespace InFatec.API.Controllers
         {
             try
             {
-                if (login.RA == null || login.Password == null) return BadRequest(new { logged = false  }) ;
+                if (login.RA == null || login.Password == null) return BadRequest(new { logged = false });
                 var result = await _repository.FindUserByRA(login.RA, new CryptoUtil(SHA256.Create()).hashPassword(login.Password));
                 if (result != null)
                 {
@@ -55,7 +77,7 @@ namespace InFatec.API.Controllers
                 }
                 else
                 {
-                    return NotFound(new { logged = false, message = "Usuário ou senha inválido(s)"}) ;
+                    return NotFound(new { logged = false, message = "Usuário ou senha inválido(s)" });
                 }
             }
             catch (Exception error)
@@ -72,8 +94,8 @@ namespace InFatec.API.Controllers
             try
             {
                 var result = await _repository.DeleteByUserId(Id);
-                if (result) return Ok(new { success = true, message = "Deletado com sucesso"});
-                else return BadRequest(new { success = false, message = "Erro ao tentar a exclusão desse usuário"});
+                if (result) return Ok(new { success = true, message = "Deletado com sucesso" });
+                else return BadRequest(new { success = false, message = "Erro ao tentar a exclusão desse usuário" });
             }
             catch (Exception error)
             {
@@ -96,6 +118,24 @@ namespace InFatec.API.Controllers
 
                 throw new Exception(error.Message);
             }
+        }
+
+        [HttpPost("InsertNewRAFixed")]
+        public async Task<ActionResult<InsertRADTO>> InsertNewRAFixed([FromBody] ApiLoginDTO dto)
+        {
+            try
+            {
+                this.isMaster = true;
+                await CreateNewUser(dto);
+                return Ok(new { success = true, message = "Usuário inserido com sucesso by: Master" });
+
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest(new { success = false, err = ex.Message });
+            }
+
         }
 
     }
