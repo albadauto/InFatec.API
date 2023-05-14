@@ -121,7 +121,7 @@ namespace InFatec.API.Controllers
         }
 
         [HttpPost("InsertNewRAFixed")]
-        public async Task<ActionResult<InsertRADTO>> InsertNewRAFixed([FromBody] ApiLoginDTO dto)
+        public async Task<ActionResult<ApiLoginDTO>> InsertNewRAFixed([FromBody] ApiLoginDTO dto)
         {
             try
             {

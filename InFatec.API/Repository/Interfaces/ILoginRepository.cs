@@ -11,5 +11,6 @@ namespace InFatec.API.Repository.Interfaces
         Task<bool> DeleteByUserId(int id);
 
         Task<ApiLoginDTO> UpdateUser(ApiLoginDTO dto);
+        Task<ApiLoginDTO> FindRA(string RA);
     }
 }
