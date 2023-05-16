@@ -29,7 +29,5 @@ namespace InFatec.API.DTO
         public int CoursesId { get; set; }
 
 
-        public string CPF { get; set; }
-
     }
 }
