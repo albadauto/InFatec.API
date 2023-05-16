@@ -12,5 +12,6 @@ namespace InFatec.API.Repository.Interfaces
 
         Task<ApiLoginDTO> UpdateUser(ApiLoginDTO dto);
         Task<ApiLoginDTO> FindRA(string RA);
+        Task<bool> verifyIfHasEmail(string email);
     }
 }

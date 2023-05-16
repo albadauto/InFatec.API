@@ -59,6 +59,10 @@ namespace InFatec.API.Repository
 
         }
 
-
+        public async Task<bool> verifyIfHasEmail(string email)
+        {
+            var result = await _context.Login.FirstOrDefaultAsync(x => x.Email == email);
+            return (result != null) ? true : false;
+        }
     }
 }

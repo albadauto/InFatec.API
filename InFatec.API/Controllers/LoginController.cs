@@ -31,6 +31,11 @@ namespace InFatec.API.Controllers
                 {
                     return StatusCode(406, new { success = false, message = "O email deverá ser com domínio @fatec.sp.gov.br. Favor contatar o administrador" });
                 }
+                var returnVerification = await _repository.verifyIfHasEmail(login.Email);
+                if (returnVerification)
+                {
+                    return BadRequest(new { success = false, message = "Erro: Email já existente" });
+                }
                 if (isMaster)
                 {
                     await _repository.InsertNewUser(login);
