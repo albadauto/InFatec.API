@@ -23,6 +23,13 @@ namespace InFatec.API.Model
         public TimeSpan End { get; set; }
 
         [Required]
+        public string Teacher { get; set; }
+
+        [Required]
+        public string Floor { get; set; }
+
+
+        [Required]
         [StringLength(50)]
         public string Coordinator { get; set; }
 
