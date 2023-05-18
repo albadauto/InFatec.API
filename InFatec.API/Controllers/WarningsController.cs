@@ -33,7 +33,8 @@ namespace InFatec.API.Controllers
                     LoginId = dto.LoginId,
                     ImgUri = path,
                     Message = dto.Message,
-                    ImageName = fileName
+                    ImageName = fileName,
+                    Title = dto.Title,
                 });
                 return Ok(new { success = true, data = result });
             }
@@ -56,11 +57,8 @@ namespace InFatec.API.Controllers
         {
 
             var filePath = $"Storage/{filename}";
-
-            var bytes = await System.IO.File.ReadAllBytesAsync(filePath);
-
-            return File(bytes, "image/*", Path.GetFileName(filePath));
-
+            var image = System.IO.File.OpenRead(filePath);
+            return File(image, "image/jpeg");
 
         }
 
