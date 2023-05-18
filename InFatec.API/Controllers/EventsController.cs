@@ -70,13 +70,13 @@ namespace InFatec.API.Controllers
             try
             {
                 var result = await _repository.GetAllEvents();
-                if (result != null) return Ok(new { success = true, data = result });
+                if (result.Count() > 0) return Ok(new { success = true, data = result });
                 else return NotFound(new { success = false, message = "Nenhum registro encontrado" });
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
-                throw;
+                throw new Exception(ex.Message);
             }
         }
 
@@ -127,6 +127,24 @@ namespace InFatec.API.Controllers
             }
         }
 
-      
+        [Authorize]
+        [HttpGet("GetLastEvents")]
+        public async Task<ActionResult<EventsDTO>> GetLastEvents()
+        {
+            try
+            {
+                var lastEvent = await _repository.GetLastEvent();
+                if (lastEvent != null) return Ok(new { success = true, data = lastEvent });
+                else return NotFound(new { success = false, message = "Não há eventos cadastrados"});
+            }
+            catch(Exception ex)
+            {
+
+                return StatusCode(406, new { success = false, err = ex.Message });
+            }
+        }
+
+
+
     }
 }

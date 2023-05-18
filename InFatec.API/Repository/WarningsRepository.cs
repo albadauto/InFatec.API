@@ -64,5 +64,27 @@ namespace InFatec.API.Repository
                 return false;
             }
         }
+
+        public async Task<WarningDTO> GetLastWarning()
+        {
+            var result = await (from w in _context.Warnings
+                               join u in _context.Login
+                               on w.LoginId equals u.Id
+                               select new { w.Message, u.Name, u.Email, u.RA, w.ImageName, w.ImgUri, w.Id }).OrderByDescending(x => x.Id).FirstOrDefaultAsync();
+            var Warning = new Warnings
+            {
+                Message = result.Message,
+                Login = new Login
+                {
+                    Name = result.Name,
+                    Email = result.Email,
+                    RA = result.RA,
+                },
+                ImageName = result.ImageName,
+                ImgUri = result.ImgUri,
+            };
+
+            return _mapper.Map<WarningDTO>(Warning);
+        }
     }
 }

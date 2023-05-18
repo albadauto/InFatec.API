@@ -35,13 +35,19 @@ namespace InFatec.API.Repository
 
         public async Task<IEnumerable<EventsDTO>> GetAllEvents()
         {
-            var result = await _context.Events.FindAsync();
+            var result = await _context.Events.ToListAsync();
             return _mapper.Map<IEnumerable<EventsDTO>>(result);
         }
 
         public async Task<EventsDTO> GetEventById(int Id)
         {
             var result = await _context.Events.FirstOrDefaultAsync(x => x.Id == Id);
+            return _mapper.Map<EventsDTO>(result);
+        }
+
+        public async Task<EventsDTO> GetLastEvent()
+        {
+            var result = await _context.Events.OrderByDescending(x => x.Id).FirstOrDefaultAsync();
             return _mapper.Map<EventsDTO>(result);
         }
 
@@ -60,5 +66,6 @@ namespace InFatec.API.Repository
             await _context.SaveChangesAsync();
             return _mapper.Map<EventsDTO>(result);
         }
+
     }
 }

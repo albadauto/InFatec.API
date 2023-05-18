@@ -23,6 +23,8 @@ namespace InFatec.API.Model
 
         public int LoginId { get; set; }
 
+        public string Title { get; set; }
+
         [NotMapped]
         public IFormFile ImageFile { get; set; }
 

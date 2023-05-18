@@ -10,5 +10,6 @@ namespace InFatec.API.Repository.Interfaces
         public Task<EventsDTO> GetEventById(int Id);
         public Task<EventsDTO> UpdateEvent(EventsDTO e);
         public Task<IEnumerable<EventsDTO>> GetAllEvents();
+        public Task<EventsDTO> GetLastEvent();
     }
 }

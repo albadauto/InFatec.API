@@ -105,6 +105,22 @@ namespace InFatec.API.Controllers
             }
         }
 
+        [Authorize]
+        [HttpGet("GetLastWarnings")]
+        public async Task<ActionResult<WarningDTO>> GetLastWarnings()
+        {
+            try
+            {
+                var result = await _repository.GetLastWarning();
+                if(result != null) return Ok(new { success = true, data = result });
+                else return NotFound(new { success = false, message = "Erro: Avisos, não encontrado" });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(406, new { success = false, message = ex.Message, exception = ex.StackTrace });
+            }
+        }
+
 
     }
 }

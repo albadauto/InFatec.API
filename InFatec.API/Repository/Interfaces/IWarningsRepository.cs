@@ -8,5 +8,6 @@ namespace InFatec.API.Repository.Interfaces
         Task<WarningDTO> InsertNewWarning(WarningDTO dto);
         Task<List<WarningDTO>> GetAllWarnings();
         Task<bool> DeleteWarning(int Id);
+        Task<WarningDTO> GetLastWarning();
     }
 }
