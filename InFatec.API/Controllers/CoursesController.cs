@@ -38,6 +38,9 @@ namespace InFatec.API.Controllers
                     course.Start = worksheet.Cells[row, 3].GetValue<TimeSpan>();
                     course.End = worksheet.Cells[row, 4].GetValue<TimeSpan>();
                     course.Coordinator = worksheet.Cells[row, 5].Value.ToString();
+                    course.Teacher = worksheet.Cells[row, 6].Value.ToString();
+                    course.Floor = worksheet.Cells[row, 7].Value.ToString();
+
                     courses.Add(course);
                 }
             }
@@ -68,6 +71,8 @@ namespace InFatec.API.Controllers
                         Coordinator = value.Coordinator,
                         Start = TimeSpan.Parse(value.Start.ToString().Split(".")[1]),
                         End = TimeSpan.Parse(value.End.ToString().Split(".")[1]),
+                        Teacher = value.Teacher,
+                        Floor = value.Floor,    
                     });
                 }
                 return Ok(new { success = true, message = "Cursos inseridos com sucesso"});

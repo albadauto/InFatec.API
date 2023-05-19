@@ -31,7 +31,7 @@ namespace InFatec.API.Repository
             var result = await (from w in _context.Warnings
                           join u in _context.Login
                           on w.LoginId equals u.Id
-                          select new { w.Message, u.Name, u.Email, u.RA, w.ImageName, w.ImgUri }).ToListAsync();
+                          select new { w.Message, u.Name, u.Email, u.RA, w.ImageName, w.ImgUri, w.Title }).ToListAsync();
             foreach (var value in result)
             {
                 Warning.Add(new Warnings
@@ -44,7 +44,8 @@ namespace InFatec.API.Repository
                         Name = value.Name,
                         Email = value.Email,
                         RA = value.RA
-                    }
+                    },
+                    Title = value.Title
                 });
             }
             return _mapper.Map<List<WarningDTO>>(Warning);
