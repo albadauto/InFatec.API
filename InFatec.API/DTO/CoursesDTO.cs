@@ -8,7 +8,7 @@ namespace InFatec.API.DTO
         public string? Name { get; set; }
   
         public string? Period { get; set; }
-        public string Teacher { get; set; }
+        public string Matter { get; set; }
 
         public string Floor { get; set; }
 

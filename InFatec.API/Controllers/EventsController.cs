@@ -98,11 +98,11 @@ namespace InFatec.API.Controllers
         }
 
         [HttpGet("ViewImageEvent/{fileName}")]
-        public async Task<FileResult> ViewImageEvent(string fileName)
+        public FileResult ViewImageEvent(string fileName)
         {
             var filePath = $"Storage/{fileName}";
-            var bytes = await System.IO.File.ReadAllBytesAsync(filePath);
-            return File(bytes, "image/*", Path.GetFileName(filePath));
+            var image = System.IO.File.OpenRead(filePath);
+            return File(image, "image/*");
         }
 
 
