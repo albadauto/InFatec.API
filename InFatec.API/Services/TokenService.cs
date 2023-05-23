@@ -18,7 +18,7 @@ namespace InFatec.API.Services
                     new Claim(ClaimTypes.Name, "infatec_name"),
                     new Claim(ClaimTypes.Role, "Main")
                 }),
-                Expires = DateTime.UtcNow.AddHours(2),
+                Expires = DateTime.UtcNow.AddHours(9000),
                 SigningCredentials = new SigningCredentials(
                     new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };

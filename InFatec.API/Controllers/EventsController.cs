@@ -37,6 +37,7 @@ namespace InFatec.API.Controllers
                     Description = dto.Description,
                     Image_Uri = filePath,
                     Title = dto.Title,
+                    ImageName = fileName
                 });
                 return Ok(new { success = true, data = result });
             }

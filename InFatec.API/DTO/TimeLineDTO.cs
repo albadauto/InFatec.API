@@ -4,6 +4,7 @@ namespace InFatec.API.DTO
 {
     public class TimeLineDTO
     {
+        public int Id { get; set; }
 
         public string ClassRoom { get; set; }
 

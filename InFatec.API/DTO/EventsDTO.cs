@@ -12,6 +12,8 @@ namespace InFatec.API.DTO
 
         public IFormFile ImageFile { get; set; }
 
+        public string ImageName { get; set; }
+
         public string? Image_Uri { get; set; }
     }
 }

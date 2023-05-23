@@ -12,6 +12,9 @@ namespace InFatec.API.Model
         [StringLength(50)]
         public string Title { get; set; }
 
+        [Required]
+        [StringLength(255)]
+        public string ImageName { get; set; }
 
         [Required]
         [StringLength(255)]

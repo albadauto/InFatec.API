@@ -4,6 +4,7 @@ namespace InFatec.API.DTO
 {
     public class CoursesDTO
     {
+        public int Id { get; set; }
 
         public string? Name { get; set; }
   

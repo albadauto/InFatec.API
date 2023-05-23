@@ -36,5 +36,14 @@ namespace InFatec.API.Repository
             await _context.Database.ExecuteSqlRawAsync("TRUNCATE TABLE COURSES");
             return true;
         }
+
+        public async Task<CoursesDTO> UpdateCourse(int Id, CoursesDTO dto)
+        {
+            var search = await _context.Courses.FirstOrDefaultAsync(x => x.Id == Id);
+            var model = _mapper.Map<Courses>(search);
+            _context.Courses.Update(model);
+            await _context.SaveChangesAsync();
+            return _mapper.Map<CoursesDTO>(model);
+        }
     }
 }

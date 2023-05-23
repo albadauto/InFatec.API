@@ -117,6 +117,22 @@ namespace InFatec.API.Controllers
             }
         }
 
+        [Authorize]
+        [HttpPut("UpdateCourse/{Id}")]
+        public async Task<ActionResult> UpdateCourseById([FromBody] CoursesDTO dto, int Id)
+        {
+            try
+            {
+                await _repository.UpdateCourse(Id, dto);
+                return Ok(new { success = true, message = "Atualizado com sucesso" });
+            }
+            catch (Exception err)
+            {
+
+                throw new Exception(err.Message);
+            }
+        }
+
 
     }
 

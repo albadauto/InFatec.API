@@ -6,6 +6,7 @@ namespace InFatec.API.DTO
 {
     public class ApiLoginDTO
     {
+        public int Id { get; set; }
 
         public string RA { get; set; }
 

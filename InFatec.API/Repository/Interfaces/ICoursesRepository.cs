@@ -7,5 +7,6 @@ namespace InFatec.API.Repository.Interfaces
         Task<CoursesDTO> InsertNewCourse(CoursesDTO dto);
         Task<List<CoursesDTO>> ListAllCourses();
         Task<bool> TruncateAllCourses();
+        Task<CoursesDTO> UpdateCourse(int Id, CoursesDTO dto);
     }
 }
