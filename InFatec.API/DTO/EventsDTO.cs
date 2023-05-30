@@ -6,6 +6,7 @@ namespace InFatec.API.DTO
 {
     public class EventsDTO
     {
+
         public string Title { get; set; }
 
         public string Description { get; set; }

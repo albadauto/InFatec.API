@@ -17,7 +17,6 @@ namespace InFatec.API.Controllers
             _repository = repository;
         }
 
-        [Authorize]
         [HttpPost("InsertNewEvent")]
         public async Task<ActionResult<EventsDTO>> InsertNewEvent([FromForm] EventsDTO dto)
         {
@@ -39,6 +38,7 @@ namespace InFatec.API.Controllers
                     Title = dto.Title,
                     ImageName = fileName
                 });
+
                 return Ok(new { success = true, data = result });
             }
             catch (Exception err)

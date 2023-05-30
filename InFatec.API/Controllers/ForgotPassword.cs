@@ -1,9 +1,11 @@
 ﻿using InFatec.API.DTO;
 using InFatec.API.Repository.Interfaces;
+using InFatec.API.Util;
 using InFatec.API.Util.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Cryptography;
 
 namespace InFatec.API.Controllers
 {
@@ -26,6 +28,7 @@ namespace InFatec.API.Controllers
         {
             try
             {
+                dto.Password = new CryptoUtil(SHA256.Create()).hashPassword(dto.Password); 
                 var result = await _repository.ResetPassword(dto);
                 if (result == null) return BadRequest(new { success = false });
                 return Ok(new { success = true, data = dto });
