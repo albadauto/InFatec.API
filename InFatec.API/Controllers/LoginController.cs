@@ -77,7 +77,7 @@ namespace InFatec.API.Controllers
                 if (result != null)
                 {
                     var token = TokenService.GenerateToken();
-                    return Ok(new { logged = true, bearer = token });
+                    return Ok(new { logged = true, bearer = token, result.Id, Type = result.Type });
                 }
                 else
                 {

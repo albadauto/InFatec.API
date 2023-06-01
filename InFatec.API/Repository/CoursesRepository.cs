@@ -37,13 +37,12 @@ namespace InFatec.API.Repository
             return true;
         }
 
-        public async Task<CoursesDTO> UpdateCourse(int Id, CoursesDTO dto)
+        public async Task<EditCoursesDTO> UpdateCourse(EditCoursesDTO dto)
         {
-            var search = await _context.Courses.FirstOrDefaultAsync(x => x.Id == Id);
-            var model = _mapper.Map<Courses>(search);
+            var model = _mapper.Map<Courses>(dto);
             _context.Courses.Update(model);
             await _context.SaveChangesAsync();
-            return _mapper.Map<CoursesDTO>(model);
+            return _mapper.Map<EditCoursesDTO>(model);
         }
     }
 }

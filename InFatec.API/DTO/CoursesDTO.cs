@@ -12,15 +12,13 @@ namespace InFatec.API.DTO
         public string Matter { get; set; }
         public string Floor { get; set; }
 
-        [System.ComponentModel.DataAnnotations.DataType(DataType.Time)]
-        public TimeSpan? Start { get; set; } = null;
+        public string Start { get; set; } 
 
-        [System.ComponentModel.DataAnnotations.DataType(DataType.Time)]
-        public TimeSpan? End { get; set; } = null;
+        public string End { get; set; }
 
         public string? Coordinator { get; set; }
 
-        public IFormFile Excel { get; set; }
+        public IFormFile? Excel { get; set; }
 
     }
 }

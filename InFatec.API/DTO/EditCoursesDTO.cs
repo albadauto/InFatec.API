@@ -13,6 +13,5 @@
 
         public string? Coordinator { get; set; }
 
-        public IFormFile Excel { get; set; }
     }
 }

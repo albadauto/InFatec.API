@@ -34,6 +34,6 @@ namespace InFatec.API.Model
         public string Coordinator { get; set; }
 
         [NotMapped]
-        public IFormFile Excel { get; set; }
+        public IFormFile? Excel { get; set; }
     }
 }

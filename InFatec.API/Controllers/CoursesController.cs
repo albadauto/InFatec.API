@@ -35,8 +35,8 @@ namespace InFatec.API.Controllers
                     var course = new CoursesDTO();
                     course.Name = worksheet.Cells[row, 1].Value.ToString();
                     course.Period = worksheet.Cells[row, 2].Value.ToString();
-                    course.Start = worksheet.Cells[row, 3].GetValue<TimeSpan>();
-                    course.End = worksheet.Cells[row, 4].GetValue<TimeSpan>();
+                    course.Start = worksheet.Cells[row, 3].Value.ToString();
+                    course.End = worksheet.Cells[row, 4].Value.ToString();
                     course.Coordinator = worksheet.Cells[row, 5].Value.ToString();
                     course.Matter = worksheet.Cells[row, 6].Value.ToString();
                     course.Floor = worksheet.Cells[row, 7].Value.ToString();
@@ -68,11 +68,11 @@ namespace InFatec.API.Controllers
                         Name = value.Name,
                         Period = value.Period,
                         Coordinator = value.Coordinator,
-                        Start = TimeSpan.Parse(value.Start.ToString().Split(".")[1]),
-                        End = TimeSpan.Parse(value.End.ToString().Split(".")[1]),
+                        Start = value.Start.ToString().Split(".")[1],
+                        End = value.End.ToString().Split(".")[1],
                         Matter = value.Matter,
-                        Floor = value.Floor,    
-                    });
+                        Floor = value.Floor,
+                    }) ;
                 }
                 return Ok(new { success = true, message = "Cursos inseridos com sucesso"});
             }
@@ -116,13 +116,12 @@ namespace InFatec.API.Controllers
             }
         }
 
-        [Authorize]
-        [HttpPut("UpdateCourse/{Id}")]
-        public async Task<ActionResult> UpdateCourseById([FromBody] CoursesDTO dto, int Id)
+        [HttpPut("UpdateCourse")]
+        public async Task<ActionResult> UpdateCourseById([FromBody] EditCoursesDTO dto)
         {
             try
             {
-                await _repository.UpdateCourse(Id, dto);
+                await _repository.UpdateCourse(dto);
                 return Ok(new { success = true, message = "Atualizado com sucesso" });
             }
             catch (Exception err)

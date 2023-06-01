@@ -38,7 +38,6 @@ namespace InFatec.API.Controllers
                     Title = dto.Title,
                     ImageName = fileName
                 });
-
                 return Ok(new { success = true, data = result });
             }
             catch (Exception err)
@@ -110,11 +109,22 @@ namespace InFatec.API.Controllers
 
         [Authorize]
         [HttpPut("UpdateEvent")]
-        public async Task<ActionResult<EventsDTO>> UpdateEvent([FromBody] EventsDTO dto)
+        public async Task<ActionResult<EventsDTO>> UpdateEvent([FromForm] EventsDTO dto)
         {
             try
             {
-                var result = await _repository.UpdateEvent(dto);    
+                if (dto.ImageFile == null) return BadRequest();
+
+                var fileName = Guid.NewGuid().ToString() + dto.ImageFile.FileName;
+                var filePath = Path.Combine("Storage", fileName);
+
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+
+                    await dto.ImageFile.CopyToAsync(fileStream);
+                }
+                dto.ImageName = fileName;
+                var result = await _repository.UpdateEvent(dto);
                 if (result != null) return Ok(new { success = true, data = result, message = "Registro atualizado com sucesso" });
                 else return NotFound(new { success = false, message = "Nenhum registro encontrado" });
             }
@@ -127,6 +137,7 @@ namespace InFatec.API.Controllers
                 return StatusCode(500, new { sucess = false, message = "Erro interno do servidor", exception = ex.Message, stacktrace = ex.StackTrace });
             }
         }
+
 
         [Authorize]
         [HttpGet("GetLastEvents")]
