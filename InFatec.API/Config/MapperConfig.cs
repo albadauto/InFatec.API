@@ -28,6 +28,10 @@ namespace InFatec.API.Config
                 config.CreateMap<TimeLine, TimeLineDTO>();
                 config.CreateMap<EditCoursesDTO, Courses>();
                 config.CreateMap<Courses, EditCoursesDTO>();
+                config.CreateMap<CodeDTO, Code>();
+                config.CreateMap<Code, CodeDTO>();
+
+
 
 
 

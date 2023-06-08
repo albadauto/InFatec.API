@@ -37,6 +37,7 @@ namespace InFatec.API.Repository
         {
             var model = _mapper.Map<Code>(code);
             await _context.Code.AddAsync(model);
+            await _context.SaveChangesAsync();
             return _mapper.Map<CodeDTO>(model);
         }
     }

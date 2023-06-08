@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace InFatec.API.Model
 {
@@ -11,7 +12,11 @@ namespace InFatec.API.Model
         [StringLength(50)]  
         public string CodeString { get; set; }
 
+        [ForeignKey("ApiLoginId")]
         public Login ApiLogin { get; set; }
+
+        [NotMapped]
+        public int ApiLoginId { get; set; } 
 
     }
 }

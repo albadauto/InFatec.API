@@ -16,6 +16,7 @@ namespace InFatec.API.Controllers
         private readonly IForgotPasswordRepository _repository;
         private readonly IEmailUtil _email;
         private string Subject = "(NÃO RESPONDA) INFATEC ";
+        private string code;
         public ForgotPassword(IForgotPasswordRepository repository, IEmailUtil email)
         {
             _email = email;
@@ -28,7 +29,7 @@ namespace InFatec.API.Controllers
         {
             try
             {
-                dto.Password = new CryptoUtil(SHA256.Create()).hashPassword(dto.Password); 
+                dto.Password = new CryptoUtil(SHA256.Create()).hashPassword(dto.Password);
                 var result = await _repository.ResetPassword(dto);
                 if (result == null) return BadRequest(new { success = false });
                 return Ok(new { success = true, data = dto });
@@ -40,22 +41,26 @@ namespace InFatec.API.Controllers
             }
         }
 
-        [HttpPost("SendEmail")]
-        public async Task<ActionResult> SendEmail([FromBody] EmailDTO dto)
+        [HttpPost("SendEmail/{IdLogin}")]
+        public async Task<ActionResult> SendEmail([FromBody] EmailDTO dto, int IdLogin)
         {
-            try
-            {
-                var result = await _email.SendEmail(dto.Email, this.Subject, dto.Body);
+
+            Console.WriteLine(IdLogin);
+                this.code = Guid.NewGuid().ToString();
+                var result = await _email.SendEmail(dto.Email, this.Subject, dto.Body + " " + this.code);
+                await _repository.InsertNewCode(new CodeDTO
+                {
+                    CodeString = this.code,
+                    ApiLoginId = IdLogin
+                });
                 if (result)
                     return Ok(new { success = true, message = "Email enviado com sucesso, verificar caixa de entrada" });
                 else
                     return BadRequest(new { success = false, message = "Erro ao enviar email" });
-            }
-            catch (Exception err)
-            {
+            
 
-                throw new Exception(err.Message);
-            }
+
+
         }
     }
 }

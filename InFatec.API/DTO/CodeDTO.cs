@@ -7,8 +7,8 @@ namespace InFatec.API.DTO
     {
         public int Id { get; set; }
 
-        public string Code { get; set; }
+        public string CodeString { get; set; }
 
-        public Login ApiLogin { get; set; }
+        public int ApiLoginId { get; set; }
     }
 }
