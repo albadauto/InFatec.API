@@ -17,10 +17,10 @@ namespace InFatec.API.Model
         public string Period { get; set; }
 
         [Required]
-        public TimeSpan Start { get; set; }
+        public string Start { get; set; }
 
         [Required]
-        public TimeSpan End { get; set; }
+        public string End { get; set; }
 
         [Required]
         public string Matter { get; set; }

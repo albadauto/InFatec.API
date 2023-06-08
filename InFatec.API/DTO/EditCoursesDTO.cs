@@ -8,7 +8,9 @@
 
         public string? Period { get; set; }
         public string Matter { get; set; }
+        public string Start { get; set; }
 
+        public string End { get; set; }
         public string Floor { get; set; }
 
         public string? Coordinator { get; set; }

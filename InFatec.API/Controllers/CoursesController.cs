@@ -68,8 +68,8 @@ namespace InFatec.API.Controllers
                         Name = value.Name,
                         Period = value.Period,
                         Coordinator = value.Coordinator,
-                        Start = value.Start.ToString().Split(".")[1],
-                        End = value.End.ToString().Split(".")[1],
+                        Start = value.Start,
+                        End = value.End,
                         Matter = value.Matter,
                         Floor = value.Floor,
                     }) ;
