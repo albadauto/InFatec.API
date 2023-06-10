@@ -15,7 +15,6 @@ namespace InFatec.API.Model
         [ForeignKey("ApiLoginId")]
         public Login ApiLogin { get; set; }
 
-        [NotMapped]
         public int ApiLoginId { get; set; } 
 
     }

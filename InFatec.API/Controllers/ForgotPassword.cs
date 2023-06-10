@@ -23,29 +23,27 @@ namespace InFatec.API.Controllers
             _repository = repository;
         }
 
-        [Authorize]
-        [HttpPut("NewPassword")]
-        public async Task<ActionResult> NewPassword([FromBody] ResetPasswordDTO dto)
+        [HttpPut("NewPassword/{code}")]
+        public async Task<ActionResult> NewPassword([FromBody] ResetPasswordDTO dto, string code)
         {
-            try
-            {
                 dto.Password = new CryptoUtil(SHA256.Create()).hashPassword(dto.Password);
-                var result = await _repository.ResetPassword(dto);
-                if (result == null) return BadRequest(new { success = false });
-                return Ok(new { success = true, data = dto });
-            }
-            catch (Exception err)
-            {
-
-                return BadRequest(new { success = false, Error = err.Message });
-            }
+                if(await _repository.VerifyCode(new CodeDTO { CodeString = code}) != null)
+                {
+                    var result = await _repository.ResetPassword(dto);
+                    if (result == null) return BadRequest(new { success = false });
+                    return Ok(new { success = true, data = dto });
+                }
+                else
+                {
+                    return BadRequest(new { success = false, message = "Código inexistente" });
+                }
+            
         }
 
         [HttpPost("SendEmail/{IdLogin}")]
         public async Task<ActionResult> SendEmail([FromBody] EmailDTO dto, int IdLogin)
         {
 
-            Console.WriteLine(IdLogin);
                 this.code = Guid.NewGuid().ToString();
                 var result = await _email.SendEmail(dto.Email, this.Subject, dto.Body + " " + this.code);
                 await _repository.InsertNewCode(new CodeDTO

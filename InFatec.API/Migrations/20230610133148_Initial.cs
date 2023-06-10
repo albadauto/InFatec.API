@@ -19,8 +19,10 @@ namespace InFatec.API.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Period = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Start = table.Column<TimeSpan>(type: "time", nullable: false),
-                    End = table.Column<TimeSpan>(type: "time", nullable: false),
+                    Start = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    End = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Matter = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Floor = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Coordinator = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
                 },
                 constraints: table =>
@@ -35,6 +37,7 @@ namespace InFatec.API.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Title = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    ImageName = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     Image_Uri = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
@@ -53,8 +56,7 @@ namespace InFatec.API.Migrations
                     Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Email = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Password = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Type = table.Column<int>(type: "int", maxLength: 100, nullable: false),
-                    CPF = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false)
+                    Type = table.Column<int>(type: "int", maxLength: 100, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -113,7 +115,8 @@ namespace InFatec.API.Migrations
                     Message = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     ImgUri = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ImageName = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    LoginId = table.Column<int>(type: "int", nullable: false)
+                    LoginId = table.Column<int>(type: "int", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {

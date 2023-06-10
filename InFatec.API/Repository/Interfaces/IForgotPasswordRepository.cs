@@ -7,5 +7,7 @@ namespace InFatec.API.Repository.Interfaces
     {
         Task<ResetPasswordDTO> ResetPassword(ResetPasswordDTO dto);
         Task<CodeDTO> InsertNewCode(CodeDTO code);
+
+        Task<CodeDTO> VerifyCode(CodeDTO code);
     }
 }

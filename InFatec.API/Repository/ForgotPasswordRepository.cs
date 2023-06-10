@@ -33,12 +33,19 @@ namespace InFatec.API.Repository
            
         }
 
+       
         public async Task<CodeDTO> InsertNewCode(CodeDTO code)
         {
             var model = _mapper.Map<Code>(code);
             await _context.Code.AddAsync(model);
             await _context.SaveChangesAsync();
             return _mapper.Map<CodeDTO>(model);
+        }
+
+        public async Task<CodeDTO> VerifyCode(CodeDTO code)
+        {
+           var result = await _context.Code.FirstOrDefaultAsync(x => x.CodeString == code.CodeString);
+            return _mapper.Map<CodeDTO>(result);
         }
     }
 }

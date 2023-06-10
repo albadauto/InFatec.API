@@ -42,7 +42,7 @@ namespace InFatec.API.Migrations
 
                     b.HasIndex("ApiLoginId");
 
-                    b.ToTable("Code", (string)null);
+                    b.ToTable("Code");
                 });
 
             modelBuilder.Entity("InFatec.API.Model.Courses", b =>
@@ -86,7 +86,7 @@ namespace InFatec.API.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Courses", (string)null);
+                    b.ToTable("Courses");
                 });
 
             modelBuilder.Entity("InFatec.API.Model.Events", b =>
@@ -117,7 +117,7 @@ namespace InFatec.API.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Events", (string)null);
+                    b.ToTable("Events");
                 });
 
             modelBuilder.Entity("InFatec.API.Model.Login", b =>
@@ -154,7 +154,7 @@ namespace InFatec.API.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Login", (string)null);
+                    b.ToTable("Login");
                 });
 
             modelBuilder.Entity("InFatec.API.Model.TimeLine", b =>
@@ -186,7 +186,7 @@ namespace InFatec.API.Migrations
 
                     b.HasIndex("LoginId");
 
-                    b.ToTable("TimeLine", (string)null);
+                    b.ToTable("TimeLine");
                 });
 
             modelBuilder.Entity("InFatec.API.Model.Warnings", b =>
@@ -222,7 +222,7 @@ namespace InFatec.API.Migrations
 
                     b.HasIndex("LoginId");
 
-                    b.ToTable("Warnings", (string)null);
+                    b.ToTable("Warnings");
                 });
 
             modelBuilder.Entity("InFatec.API.Model.Code", b =>
